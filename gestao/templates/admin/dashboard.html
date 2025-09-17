@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Dashboard Admin</h2>
+<table class="table">
+  <tr>
+    <th>ID</th>
+    <th>Título</th>
+    <th>Status</th>
+    <th>Requerente</th>
+    <th>Responsável</th>
+  </tr>
+  {% for chamado in chamados %}
+  <tr>
+    <td>{{ chamado.id }}</td>
+    <td>{{ chamado.titulo }}</td>
+    <td>{{ chamado.get_status_display }}</td>
+    <td>{{ chamado.requerente }}</td>
+    <td>{{ chamado.responsavel|default:"-" }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

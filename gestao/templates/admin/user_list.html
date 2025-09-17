@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Usuários</h2>
+<table class="table">
+  <tr>
+    <th>Nome</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Status</th>
+    <th>Ações</th>
+  </tr>
+  {% for usuario in usuarios %}
+  <tr>
+    <td>{{ usuario.username }}</td>
+    <td>{{ usuario.email }}</td>
+    <td>{{ usuario.get_role_display }}</td>
+    <td>{{ usuario.is_active|yesno:"Ativo,Inativo" }}</td>
+    <td>
+      <a href="{% url 'user_edit' usuario.pk %}" class="btn btn-sm btn-warning">Editar</a>
+      {% if usuario.is_active %}
+        <a href="{% url 'user_desativar' usuario.pk %}" class="btn btn-sm btn-danger">Desativar</a>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
