@@ -29,26 +29,29 @@ urlpatterns = [
     path("logout/", auth_views.CustomLogoutView.as_view(), name="logout"),
 
     # Requerente
-    path("chamados/", chamado_views.ChamadoListView.as_view(), name="chamado_list"),
-    path("chamados/novo/", chamado_views.ChamadoCreateView.as_view(), name="chamado_create"),
-    path("chamados/<int:pk>/", chamado_views.ChamadoDetailView.as_view(), name="chamado_detail"),
-    path("chamados/<int:pk>/editar/", chamado_views.ChamadoUpdateView.as_view(), name="chamado_edit"),
-    path("chamados/<int:pk>/excluir/", chamado_views.ChamadoDeleteView.as_view(), name="chamado_delete"),
-    path("chamados/<int:pk>/anexo/", chamado_views.AnexoCreateView.as_view(), name="chamado_anexo"),
+    path("chamados/", chamado_views.ChamadoListView.as_view(), name="chamado_list"), # exibe a lista de chamados do requerente
+    path("chamados/novo/", chamado_views.ChamadoCreateView.as_view(), name="chamado_create"), # formulario de criacao de chamado
+    path("chamados/<int:pk>/", chamado_views.ChamadoDetailView.as_view(), name="chamado_detail"), # detalhe dos chamados
+    path("chamados/<int:pk>/editar/", chamado_views.ChamadoUpdateView.as_view(), name="chamado_edit"), # edicao dos chamados
+    path("chamados/<int:pk>/excluir/", chamado_views.ChamadoDeleteView.as_view(), name="chamado_delete"), # excluir um chamado caso aberto
+    path("chamados/<int:pk>/anexo/", chamado_views.AnexoCreateView.as_view(), name="chamado_anexo"), # anexos do chamado
 
     # Admin
-    path("admin/dashboard/", admin_views.AdminDashboardView.as_view(), name="admin_dashboard"),
-    path("admin/usuarios/", admin_views.UserListView.as_view(), name="user_list"),
-    path("admin/usuarios/<int:pk>/editar/", admin_views.UserUpdateView.as_view(), name="user_edit"),
-    path("admin/usuarios/<int:pk>/desativar/", admin_views.UserDesativarView, name="user_desativar"),
+    path("admin/dashboard/", admin_views.AdminDashboardView.as_view(), name="admin_dashboard"), # admin dashboard - lista de chamados
+    path("admin/chamados/<int:pk>/", admin_views.AdminChamadoDetail.as_view(), name="admin_chamados"),  # detalhe dos chamados
+    path("admin/chamados/<int:pk>/editar/", admin_views.AdminChamadoUpdate.as_view(), name="admin_chamado_edit"), # editar os chamados
+    path("admin/chamados/<int:pk>/excluir/", admin_views.AdminChamadoDelete, name="admin_chamado_delete"), # deletar um chamado
+    path("admin/usuarios/", admin_views.UserListView.as_view(), name="user_list"), # lista de usuários
+    path("admin/usuarios/<int:pk>/editar/", admin_views.UserUpdateView.as_view(), name="user_edit"), # editar usuário
+    path("admin/usuarios/<int:pk>/desativar/", admin_views.UserDesativarView, name="user_desativar"), # desativa um usuário
 
     # Responsável
-    path("responsavel/dashboard/", responsavel_views.ResponsavelDashboardView.as_view(), name="responsavel_dashboard"),
-    path("responsavel/chamados/fila/", responsavel_views.FilaEChamadosAceitosView.as_view(), name="chamado_fila"),
-    path("responsavel/chamados/<int:pk>/show/", responsavel_views.DetalheChamadoView.as_view(), name="responsavel_chamado_detail"),
-    path("responsavel/chamados/<int:pk>/aceitar/", responsavel_views.AceitarChamadoView, name="chamado_aceitar"),
-    path("responsavel/chamados/<int:pk>/retornar/", responsavel_views.RetornarChamadoFila, name="chamado_retornar"),
-    path("responsavel/chamados/<int:pk>/concluir/", responsavel_views.ConcluirChamadoView.as_view(), name="chamado_concluir"),
-    path("responsavel/chamados/<int:pk>/anexo/", responsavel_views.ResponsavelAnexoCreateView.as_view(), name="responsavel_anexo"),
+    path("responsavel/dashboard/", responsavel_views.ResponsavelDashboardView.as_view(), name="responsavel_dashboard"), # dashboard responsavel
+    path("responsavel/chamados/fila/", responsavel_views.FilaEChamadosAceitosView.as_view(), name="chamado_fila"), # fila de chamados abertos
+    path("responsavel/chamados/<int:pk>/show/", responsavel_views.DetalheChamadoView.as_view(), name="responsavel_chamado_detail"), # detalhe dos chamados
+    path("responsavel/chamados/<int:pk>/aceitar/", responsavel_views.AceitarChamadoView, name="chamado_aceitar"), # aceitar chamados
+    path("responsavel/chamados/<int:pk>/retornar/", responsavel_views.RetornarChamadoFila, name="chamado_retornar"), # retornar chamado pra fila
+    path("responsavel/chamados/<int:pk>/concluir/", responsavel_views.ConcluirChamadoView.as_view(), name="chamado_concluir"), # conclusão do chamado
+    path("responsavel/chamados/<int:pk>/anexo/", responsavel_views.ResponsavelAnexoCreateView.as_view(), name="responsavel_anexo"), # anexos da conclusão do chamado
 
 ]

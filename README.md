@@ -26,3 +26,5 @@ Chamados
 -> pode retornar o chamado pra fila caso esteja em andamento ou cancelado (bloqueado se estiver aberta, ou concluída)
 -> pode editar o responsável, requerente do chamado
 -> pode excluir qualquer chamado
+
+------------------------------------------------------------------------------------------------

@@ -9,16 +9,17 @@
         <li class="list-group-item"><b>Título: </b> {{ chamado.titulo }}</li>
         <li class="list-group-item"><b>Descrição: </b> {{ chamado.descricao }}</li>
         <li class="list-group-item"><b>Status: </b> {{ chamado.status }}</li>
-        <li class="list-group-item"><b>Responsável: </b>  {{ chamado.responsavel|default:"Aguardando atendimento..." }} </li>
+        <li class="list-group-item"><b>Responsável: </b>  {{ chamado.responsavel|default:"-" }} </li>
         <li class="list-group-item"><b>Solução: </b>  {{ chamado.solucao|default:"-" }} </li>
         <li class="list-group-item"><b>Criado em: </b> {{ chamado.created_at|date:"d/m/Y H:i" }}</li>
         <li class="list-group-item"><b>Atualizado em: </b> {{ chamado.updated_at|date:"d/m/Y H:i" }}</li>
         </ul>
-
     </div>
 
     <div class="d-flex justify-content-center mt-3">
-        <a href="{% url 'chamado_list' %}" class="btn btn-sm btn-warning">Voltar</a>
+        <a href="{% url 'admin_chamado_delete' chamado.pk %}" class="btn btn-sm btn-danger me-2">Excluir</a>
+        <a href="{% url 'admin_chamado_edit' chamado.pk %}" class="btn btn-sm btn-primary me-2">Editar</a>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-sm btn-secondary">Voltar</a>
     </div>
 
 {% endblock %}

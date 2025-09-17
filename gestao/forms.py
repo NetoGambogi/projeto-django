@@ -22,6 +22,13 @@ class ChamadoForm(forms.ModelForm):
     class Meta:
         model = Chamado
         fields = ["titulo", "descricao"]
+        
+    # chamados = admin
+    
+class AdminChamadoForm(forms.ModelForm):
+    class Meta:
+        model = Chamado
+        fields = ["titulo", "descricao", "status", "requerente", "responsavel", "solucao"]    
 
     #conclusao = responsavel
 

@@ -1,9 +1,9 @@
-from django.views.generic import ListView, UpdateView
+from django.views.generic import ListView, UpdateView, DetailView, DeleteView
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ..models import CustomUser, Chamado
-from ..forms import UserForm
+from ..forms import AdminChamadoForm, UserForm
 
 class AdminDashboardView(LoginRequiredMixin, ListView):
     model = Chamado
@@ -24,6 +24,21 @@ class UserListView(LoginRequiredMixin, ListView):
         if nome:
             qs = qs.filter(username_icontains=nome)
         return qs
+    
+class AdminChamadoUpdate(LoginRequiredMixin, UpdateView):
+    model = Chamado
+    form_class = AdminChamadoForm
+    template_name = "admin/chamado_edit.html"
+    success_url = reverse_lazy("admin_dashboard")
+    
+class AdminChamadoDetail(LoginRequiredMixin, DetailView):
+    model = Chamado
+    template_name = "admin/chamado_detail.html"
+    
+def AdminChamadoDelete(request, pk):
+    chamado = get_object_or_404(Chamado, pk=pk)
+    chamado.delete()
+    return redirect("admin_dashboard")
     
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = CustomUser

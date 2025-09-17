@@ -8,17 +8,25 @@
     <th>Status</th>
     <th>Requerente</th>
     <th>Responsável</th>
+    <th>Ações</th>
   </tr>
   {% for chamado in chamados %}
   <tr>
+
     <td>{{ chamado.id }}</td>
     <td>{{ chamado.titulo }}</td>
     <td>{{ chamado.get_status_display }}</td>
     <td>{{ chamado.requerente }}</td>
     <td>{{ chamado.responsavel|default:"-" }}</td>
+    <td>
+    <a href="{% url 'admin_chamados' chamado.id %}" class="btn btn-primary btn-sm">Detalhes</a>                                               
+    </td>
+
   </tr>
   {% endfor %}
 </table>
-
+  <div class="d-flex justify-content-center mt-2">
       <a href="{% url 'user_list' %}" class="btn btn-sm btn-warning">Lista de usuários</a>
+  </div>
+    
 {% endblock %}
