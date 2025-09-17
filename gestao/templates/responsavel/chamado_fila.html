@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1 class="text-center mb-4">Fila e chamados aceitos</h1>
+
+    <div class="row">
+        <!-- Chamados abertos -->
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    Chamados na fila
+                </div>
+                <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Título</th>
+                                        <th>Descrição</th>
+                                        <th>Criado em</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for chamado in chamados_abertos %}
+                                        <tr>
+                                            <td >{{ chamado.id }}</td>
+                                            <td>{{ chamado.titulo }}</td>
+                                            <td class="text-break">{{ chamado.descricao }}</td>
+                                            <td>{{ chamado.criado_em|date:"d/m/Y H:i" }}</td>
+                                            <td>
+                                                <form action="{% url 'chamado_aceitar' chamado.pk %}" method='POST'>
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-success btn-sm">Aceitar</button>
+                                                </form>
+                                            </td>                    
+                                        </tr>
+                                    {% empty %}
+                                    <tr>
+                                    <p> Não há chamados abertos no momento. </p>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+<div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    Chamados aceitos
+                </div>
+                <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Título</th>
+                                        <th>Descrição</th>
+                                        <th>Última Att</th>
+                                        <th>Detalhes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for chamado in chamados_aceitos %}
+                                        <tr>
+                                            <td>{{ chamado.id }}</td>
+                                            <td>{{ chamado.titulo }}</td>
+                                            <td class="text-break">{{ chamado.descricao }}</td>
+                                            <td>{{ chamado.updated_at|date:"d/m/Y H:i" }}</td>
+                                            <td>
+                                                <a href="{% url 'responsavel_chamado_detail' chamado.id %}" class="btn btn-primary btn-sm">Detalhes</a>                                               
+                                                <form action="{% url 'chamado_retornar' chamado.pk %}" method='POST'>
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-success btn-sm  mt-1">Voltar a fila</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {% empty %}
+                                    <tr>
+                                    <p> Não há chamados aceitos no momento. </p>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

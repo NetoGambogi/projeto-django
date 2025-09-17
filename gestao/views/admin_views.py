@@ -33,6 +33,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 def UserDesativarView(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
-    user.is_activer = False
+    user.is_active = False
     user.save()
     return redirect("user_list")

@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Meus Chamados</h2>
-<a href="{% url 'chamado_create' %}" class="btn btn-success mb-3">Novo Chamado</a>
 <table class="table table-bordered">
   <tr>
     <th>Título</th>
@@ -23,4 +22,8 @@
   <tr><td colspan="3">Nenhum chamado encontrado.</td></tr>
   {% endfor %}
 </table>
+
+  <div class="d-flex justify-content-center">
+      <a href="{% url 'chamado_create' %}" class="btn btn-success mb-3">Novo Chamado</a>
+  </div>
 {% endblock %}

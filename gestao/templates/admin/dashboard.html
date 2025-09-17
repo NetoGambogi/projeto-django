@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Dashboard Admin</h2>
+<h2>Dashboard Admin - Chamados</h2>
 <table class="table">
   <tr>
     <th>ID</th>
@@ -19,4 +19,6 @@
   </tr>
   {% endfor %}
 </table>
+
+      <a href="{% url 'user_list' %}" class="btn btn-sm btn-warning">Lista de usuários</a>
 {% endblock %}

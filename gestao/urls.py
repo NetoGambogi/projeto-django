@@ -18,6 +18,7 @@ from django.urls import path
 from django.views.generic import RedirectView
 from .views import auth_views, chamado_views, admin_views, responsavel_views
 from .views.chamado_views import ChamadoListView, ChamadoCreateView
+from gestao import views
 
 urlpatterns = [
 
@@ -43,7 +44,10 @@ urlpatterns = [
 
     # Responsável
     path("responsavel/dashboard/", responsavel_views.ResponsavelDashboardView.as_view(), name="responsavel_dashboard"),
+    path("responsavel/chamados/fila/", responsavel_views.FilaEChamadosAceitosView.as_view(), name="chamado_fila"),
+    path("responsavel/chamados/<int:pk>/show/", responsavel_views.DetalheChamadoView.as_view(), name="responsavel_chamado_detail"),
     path("responsavel/chamados/<int:pk>/aceitar/", responsavel_views.AceitarChamadoView, name="chamado_aceitar"),
+    path("responsavel/chamados/<int:pk>/retornar/", responsavel_views.RetornarChamadoFila, name="chamado_retornar"),
     path("responsavel/chamados/<int:pk>/concluir/", responsavel_views.ConcluirChamadoView.as_view(), name="chamado_concluir"),
     path("responsavel/chamados/<int:pk>/anexo/", responsavel_views.ResponsavelAnexoCreateView.as_view(), name="responsavel_anexo"),
 
