@@ -1,1 +1,26 @@
-<h1>teste requerentes</h1>
+{% extends "base.html" %}
+{% block content %}
+<h2>Meus Chamados</h2>
+<a href="{% url 'chamado_create' %}" class="btn btn-success mb-3">Novo Chamado</a>
+<table class="table table-bordered">
+  <tr>
+    <th>Título</th>
+    <th>Status</th>
+    <th>Ações</th>
+  </tr>
+  {% for chamado in object_list %}
+  <tr>
+    <td><a href="{% url 'chamado_detail' chamado.pk %}">{{ chamado.titulo }}</a></td>
+    <td>{{ chamado.get_status_display }}</td>
+    <td>
+      {% if chamado.status == "aberto" %}
+        <a href="{% url 'chamado_edit' chamado.pk %}" class="btn btn-sm btn-warning">Editar</a>
+        <a href="{% url 'chamado_delete' chamado.pk %}" class="btn btn-sm btn-danger">Excluir</a>
+      {% endif %}
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="3">Nenhum chamado encontrado.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
