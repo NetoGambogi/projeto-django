@@ -19,6 +19,8 @@ from django.views.generic import RedirectView
 from .views import auth_views, chamado_views, admin_views, responsavel_views
 from .views.chamado_views import ChamadoListView, ChamadoCreateView
 from gestao import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
 
@@ -55,4 +57,4 @@ urlpatterns = [
     path("responsavel/chamados/<int:pk>/concluir/", responsavel_views.ConcluirChamadoView.as_view(), name="chamado_concluir"), # conclusão do chamado
     path("responsavel/chamados/<int:pk>/anexo/", responsavel_views.ResponsavelAnexoCreateView.as_view(), name="responsavel_anexo"), # anexos da conclusão do chamado
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

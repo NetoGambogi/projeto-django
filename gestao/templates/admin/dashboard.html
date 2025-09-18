@@ -1,6 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
+
 <h2>Dashboard Admin - Chamados</h2>
+
+<form method="get">
+  {{ filter.form.as_p }}
+  <button type="submit">Filtrar</button>
+</form>
+
+<hr>
+
+<ul>
+  {% for chamado in chamados %}
+    <li>{{ chamado.titulo }} - {{ chamado.get_status_display }}</li>
+  {% empty %}
+    <li>Nenhum chamado encontrado.</li>
+  {% endfor %}
+</ul>
+
+<p><strong>Debug:</strong> Chamados = {{ chamados|length }}</p>
+
 <table class="table">
   <tr>
     <th>ID</th>

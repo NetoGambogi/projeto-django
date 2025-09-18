@@ -1,10 +1,15 @@
 from django.contrib import messages
-from django.views.generic import ListView, UpdateView, DetailView, DeleteView
-from django.shortcuts import redirect, get_object_or_404
+from django.views.generic import ListView, UpdateView, DetailView
+from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy
+from django.contrib.auth import get_user_model
+from django_filters.views import FilterView
+from gestao.filters import ChamadoFilter, UserFilter
 from gestao.mixins import AdminRequiredMixin
 from ..models import CustomUser, Chamado
 from ..forms import AdminChamadoForm, UserForm
+
+User = get_user_model()
 
 class AdminDashboardView(AdminRequiredMixin, ListView):
     model = Chamado
@@ -69,3 +74,19 @@ def RetornarChamadoFila(request, pk):
         chamado.responsavel = None
         chamado.save()
     return redirect("admin_dashboard")
+
+
+## Filtros
+
+class UserListView(FilterView):
+    model = User
+    filterset_class = UserFilter
+    template_name = "admin/user_list.html"
+    context_object_name = "usuarios"
+    
+    
+class ChamadoListView(FilterView):
+    model = Chamado
+    template_name = "admin/dashboard.html"
+    filterset_class = ChamadoFilter
+    context_object_name = "chamados"

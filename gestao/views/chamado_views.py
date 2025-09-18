@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from django.urls import reverse_lazy
 from gestao.mixins import RequerenteRequiredMixin
 from ..models import Chamado, ChamadoAnexo
@@ -20,7 +20,21 @@ class ChamadoCreateView(RequerenteRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.requerente = self.request.user
-        return super().form_valid(form)
+
+        response = super().form_valid(form)
+
+
+        arquivos = form.cleaned_data.get("anexos") or []
+        print(">>> DEBUG anexos recebidos:", arquivos)
+        for arquivo in arquivos:
+            print(">>> Salvando:", arquivo.name)
+            ChamadoAnexo.objects.create(
+                chamado=self.object,  
+                arquivo=arquivo,
+                enviado_por=self.request.user
+            )
+
+        return response
     
 def ChamadoDelete(request, pk):
     chamado = get_object_or_404(Chamado, pk=pk)

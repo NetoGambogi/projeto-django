@@ -16,6 +16,28 @@
         </ul>
     </div>
 
+                <h3>Imagens do Chamado</h3>
+
+            {% with imagens=chamado.anexos.all %}
+            {% if imagens %}
+                <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+                {% for anexo in imagens %}
+                    {% if ".jpg" in anexo.arquivo.url|lower or ".jpeg" in anexo.arquivo.url|lower or ".png" in anexo.arquivo.url|lower %}
+                    <div>
+                        <img src="{{ anexo.arquivo.url }}" 
+                        alt="imagem"
+                        style="width: 150px;">
+                    </div>
+                    
+                    {% endif %}
+                    
+                {% endfor %}
+                </div>
+            {% else %}
+                <p style="color:red;">Nenhuma imagem enviada para este chamado.</p>
+            {% endif %}
+            {% endwith %}
+
     <div class="d-flex justify-content-center mt-3">
         <form action="{% url 'admin_chamado_retornar' chamado.pk %}" method='POST'>
             {% csrf_token %}

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import modelformset_factory
+from gestao.fields import MultipleFileField, MultipleFileInput
 from .models import CustomUser, Chamado, ChamadoAnexo
 
     # usuarios
@@ -19,6 +20,14 @@ class UserForm(UserChangeForm):
     # chamados = requerente
 
 class ChamadoForm(forms.ModelForm):
+    anexos = MultipleFileField(
+        widget=MultipleFileInput(attrs={"multiple": True}),
+        required=False,
+        max_upload_size=5 * 1024 * 1024,
+        allowed_types=["pdf", "jpg", "png", "jpeg"],
+        label="Arquivos"
+    )
+    
     class Meta:
         model = Chamado
         fields = ["titulo", "descricao"]
@@ -33,14 +42,28 @@ class AdminChamadoForm(forms.ModelForm):
     #conclusao = responsavel
 
 class SolucaoForm(forms.ModelForm):
+    anexos = MultipleFileField(
+        widget=MultipleFileInput(attrs={"multiple": True}),
+        required=False,
+        max_upload_size=5 * 1024 * 1024,
+        allowed_types=["pdf", "jpg", "png", "jpeg"],
+        label="Arquivos"
+    )
+    
     class Meta:
         model = Chamado
         fields = ["solucao"]
         widgets = {
             "solucao": forms.Textarea(attrs={"rows": 4})
         }
+   
 
 class ChamadoAnexoForm(forms.ModelForm):
     class Meta:
         model = ChamadoAnexo
         fields = ["arquivo"]
+        
+    arquivo = forms.FileField(
+        widget=MultipleFileInput(attrs={"multiple": True}),
+        required=False
+    )

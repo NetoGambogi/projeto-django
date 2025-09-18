@@ -61,7 +61,19 @@ class ConcluirChamadoView(ResponsavelRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.instance.status = "concluido"
         form.instance.responsavel = self.request.user
-        return super().form_valid(form)
+        response = super().form_valid(form)
+    
+        arquivos = form.cleaned_data.get("anexos") or []
+
+        for arquivo in arquivos:
+
+            ChamadoAnexo.objects.create(
+                chamado=self.object,  
+                arquivo=arquivo,
+                enviado_por=self.request.user
+            )
+
+        return response
     
 class ResponsavelAnexoCreateView(ResponsavelRequiredMixin, CreateView):
     model = ChamadoAnexo

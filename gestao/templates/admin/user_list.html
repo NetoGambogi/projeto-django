@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Usuários</h2>
+
+<form method="get">
+  {{ filter.form.as_p }}
+  <button type="submit">Filtrar</button>
+</form>
+
 <table class="table">
   <tr>
     <th>Nome</th>
