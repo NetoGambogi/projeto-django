@@ -2,11 +2,11 @@ from multiprocessing import context
 from django.views.generic import ListView, UpdateView, CreateView, TemplateView, DetailView
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from gestao.mixins import ResponsavelRequiredMixin
 from ..models import Chamado, ChamadoAnexo
 from ..forms import SolucaoForm, ChamadoAnexoForm
 
-class ResponsavelDashboardView(LoginRequiredMixin, ListView):
+class ResponsavelDashboardView(ResponsavelRequiredMixin, ListView):
     model = Chamado
     template_name = "responsavel/dashboard.html"
 
@@ -21,7 +21,7 @@ def AceitarChamadoView(request, pk):
         chamado.save()
     return redirect("chamado_fila")
 
-class FilaEChamadosAceitosView(LoginRequiredMixin, TemplateView):
+class FilaEChamadosAceitosView(ResponsavelRequiredMixin, TemplateView):
     template_name = "responsavel/chamado_fila.html"
     
     def get_context_data(self, **kwargs):
@@ -33,7 +33,7 @@ class FilaEChamadosAceitosView(LoginRequiredMixin, TemplateView):
         )
         return context
     
-class DetalheChamadoView(LoginRequiredMixin, DetailView):
+class DetalheChamadoView(ResponsavelRequiredMixin, DetailView):
     model = Chamado
     template_name = "responsavel/chamado_detail.html"
     context_object_name = 'chamado'
@@ -52,7 +52,7 @@ def RetornarChamadoFila(request, pk):
         chamado.save()
     return redirect("chamado_fila")
     
-class ConcluirChamadoView(LoginRequiredMixin, UpdateView):
+class ConcluirChamadoView(ResponsavelRequiredMixin, UpdateView):
     model = Chamado
     form_class = SolucaoForm
     template_name = "responsavel/chamado_detail.html"
@@ -63,7 +63,7 @@ class ConcluirChamadoView(LoginRequiredMixin, UpdateView):
         form.instance.responsavel = self.request.user
         return super().form_valid(form)
     
-class ResponsavelAnexoCreateView(LoginRequiredMixin, CreateView):
+class ResponsavelAnexoCreateView(ResponsavelRequiredMixin, CreateView):
     model = ChamadoAnexo
     form_class = ChamadoAnexoForm
     template_name = "responsavel/anexo_form.html"

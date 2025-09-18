@@ -31,10 +31,6 @@ Chamados
 
 O que falta ser feito:
 
--> Requerente pode excluir um chamado que ainda está aberto
 -> Anexo de arquvios de requerente e responsável
 
 -> Todos os filtros
--> Admin retornar chamados em andamento ou cancelado para a fila
-
--> Uma melhor verificação para usuários não acessarem rotas que não são suas. Por exemplo: Requerente acessar uma rota de responsável.

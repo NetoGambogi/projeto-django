@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gestao',
-    'django_seed',
 ]
 
 AUTH_USER_MODEL = 'gestao.CustomUser'

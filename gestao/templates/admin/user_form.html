@@ -5,5 +5,6 @@
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="{% url 'user_list' %}" class="btn btn-sm btn-secondary ">Voltar</a>
 </form>
 {% endblock %}
