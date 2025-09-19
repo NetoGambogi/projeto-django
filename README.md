@@ -1,7 +1,7 @@
 # projeto-django
 Projeto de gestão de chamados em Django.
 
-Oque é necessário fazer:
+Funções:
 
 Criar um projeto em django que tenha cadastro de usuários (roles: requerente, responsável, admin)
 Criar um dashboard para cada role;
@@ -28,10 +28,3 @@ Chamados
 -> pode excluir qualquer chamado
 
 ------------------------------------------------------------------------------------------------
-
-O que falta ser feito:
-
-
--> A função de deletar deve deletar os anexos do chamado no servidor (ele apaga do db, mas fica armazenado todas as imagens em media/chamados)
-
--> Melhorar os templates do admin
