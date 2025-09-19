@@ -28,7 +28,7 @@
                                             <td >{{ chamado.id }}</td>
                                             <td>{{ chamado.titulo }}</td>
                                             <td class="text-break">{{ chamado.descricao }}</td>
-                                            <td>{{ chamado.criado_em|date:"d/m/Y H:i" }}</td>
+                                            <td>{{ chamado.created_at|date:"d/m/Y H:i" }}</td>
                                             <td>
                                                 <form action="{% url 'chamado_aceitar' chamado.pk %}" method='POST'>
                                                     {% csrf_token %}

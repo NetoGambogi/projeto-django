@@ -2,10 +2,52 @@
 {% block content %}
 <h2>Usuários</h2>
 
+<div class="row text-center g-4 mb-4">  
+  <div class="col-md-3">  
+    <div class="card bg-light shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Total usuários</h5>
+        <h3 class="fs-2">{{ total_users }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card bg-warning shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Total de requerentes</h5>
+        <h3 class="fs-2">{{ total_requerentes }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card bg-info shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Total de responsáveis</h5>
+        <h3 class="fs-2">{{ total_responsaveis }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card bg-success text-white shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Usuários ativos</h5>
+        <h3 class="fs-2">{{ total_ativos }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center">
 <form method="get">
-  {{ filter.form.as_p }}
-  <button type="submit">Filtrar</button>
+    {{ filter.form.as_p }}
+  <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-success">Filtrar</button>
+  </div>
 </form>
+</div>
 
 <table class="table">
   <tr>
@@ -30,6 +72,9 @@
   </tr>
   {% endfor %}
 </table>
+
+
+{% include "partials/pagination.html" %}
 
 <div class="d-flex justify-content-center">
     <a href="{% url 'admin_dashboard' %}" class="btn btn-sm btn-secondary ">Voltar</a>

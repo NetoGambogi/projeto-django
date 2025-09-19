@@ -3,10 +3,52 @@
 
 <h2>Dashboard Admin - Chamados</h2>
 
+<div class="row text-center g-4 mb-4">  
+  <div class="col-md-3">  
+    <div class="card bg-light shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Total</h5>
+        <h3 class="fs-2">{{ total }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card bg-warning shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Aguardando atendimento</h5>
+        <h3 class="fs-2">{{ abertos }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card bg-info shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Em atendimento</h5>
+        <h3 class="fs-2">{{ em_andamento }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card bg-success text-white shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Concluídos</h5>
+        <h3 class="fs-2">{{ concluidos }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center">
 <form method="get">
     {{ filter.form.as_p }}
-  <button type="submit">Filtrar</button>
+  <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-success">Filtrar</button>
+  </div>
 </form>
+</div>
 
 <table class="table">
   <tr>
@@ -17,7 +59,7 @@
     <th>Responsável</th>
     <th>Ações</th>
   </tr>
-  {% for chamado in filter.qs %}
+  {% for chamado in chamados %}
   <tr>
     <td>{{ chamado.id }}</td>
     <td>{{ chamado.titulo }}</td>
@@ -34,6 +76,8 @@
   </tr>
   {% endfor %}
 </table>
+
+{% include "partials/pagination.html" %}
 
 <div class="d-flex justify-content-center mt-2">
   <a href="{% url 'user_list' %}" class="btn btn-sm btn-warning">Lista de usuários</a>

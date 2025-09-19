@@ -15,26 +15,47 @@ class AdminDashboardView(AdminRequiredMixin, ListView):
     model = Chamado
     template_name = "admin/dashboard.html"
     context_object_name = "chamados"
+    paginate_by = 8
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.filterset = ChamadoFilter(self.request.GET, queryset=queryset)
+        return self.filterset.qs
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['filter'] = ChamadoFilter(self.request.GET, queryset=self.get_queryset())
+        context['filter'] = self.filterset
+    
+        chamados = Chamado.objects.all()
+        context["total"] = chamados.count()
+        context["abertos"] = Chamado.objects.filter(status="aberto", responsavel__isnull=True).count() 
+        context["em_andamento"] = chamados.filter(status="em_andamento").count()
+        context["concluidos"] = chamados.filter(status="concluido").count()
+        
         return context
 
 class UserListView(AdminRequiredMixin, ListView):
     model = CustomUser
     template_name = "admin/user_list.html"
     context_object_name = "usuarios"
-
+    paginate_by = 8
+    
     def get_queryset(self):
-        qs = CustomUser.objects.all()
-        role = self.request.GET.get("role")
-        nome = self.request.GET.get("nome")
-        if role:
-            qs = qs.filter(role=role)
-        if nome:
-            qs = qs.filter(username_icontains=nome)
-        return qs
+        queryset = super().get_queryset()
+        self.filterset = UserFilter(self.request.GET, queryset=queryset)
+        return self.filterset.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = self.filterset
+        
+        usuarios = CustomUser.objects.all()
+        context["total_users"] = usuarios.count()
+        context["total_requerentes"] = usuarios.filter(role="requerente").count()
+        context["total_responsaveis"] = usuarios.filter(role="responsavel").count()
+        context["total_ativos"] = usuarios.filter(is_active=True).count()
+        
+        return context
     
 class AdminChamadoUpdate(AdminRequiredMixin, UpdateView):
     model = Chamado
@@ -83,10 +104,5 @@ def RetornarChamadoFila(request, pk):
 
 ## Filtros
 
-class UserListView(FilterView):
-    model = User
-    filterset_class = UserFilter
-    template_name = "admin/user_list.html"
-    context_object_name = "usuarios"
     
     
