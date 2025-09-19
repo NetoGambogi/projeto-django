@@ -16,44 +16,53 @@
 
     </div>
 
-            <h3>Imagens do Chamado</h3>
+<div class="container my-4">
+    <h3 class="mb-3 text-primary">Imagens do Chamado</h3>
 
-            {% with imagens=chamado.anexos.all %}
-            {% if imagens %}
-                <div>
-                {% for anexo in imagens %}
-                    {% if ".jpg" in anexo.arquivo.url|lower or ".jpeg" in anexo.arquivo.url|lower or ".png" in anexo.arquivo.url|lower %}
-                    <div>
-                        <img src="{{ anexo.arquivo.url }}" 
-                        alt="imagem"
-                        style="width: 150px;">
+    {% with imagens=chamado.anexos.all %}
+    {% if imagens %}
+        <div class="row g-3">
+            {% for anexo in imagens %}
+                {% if ".jpg" in anexo.arquivo.url|lower or ".jpeg" in anexo.arquivo.url|lower or ".png" in anexo.arquivo.url|lower %}
+                <div class="col-6 col-md-3">
+                    <div class="card shadow-sm border-0">
+                        <img src="{{ anexo.arquivo.url }}"
+                             class="card-img-top img-thumbnail"
+                             alt="imagem"
+                             style="cursor: pointer;"
+                             data-bs-toggle="modal"
+                             data-bs-target="#imagemModal{{ forloop.counter }}">
                     </div>
-                    
-                    {% endif %}
-                    
-                {% endfor %}
                 </div>
-            {% else %}
-                <p style="color:red;">Nenhuma imagem enviada para este chamado.</p>
-            {% endif %}
-            {% endwith %}
-
-
-    <div class>
-    {% if chamado.status != 'concluido' %}
-    <h2>Concluir Chamado</h2>
-        <form method="POST" action="{% url 'chamado_concluir' chamado.pk %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Concluir Chamado</button>
-        </form>
+                {% endif %}
+            {% endfor %}
+        </div>
     {% else %}
-        <p>Chamado já concluído.</p>
+        <p class="text-danger fw-bold">Nenhuma imagem enviada para este chamado.</p>
     {% endif %}
+    {% endwith %}
+
+    <hr class="my-4">
+
+    <div>
+        {% if chamado.status != 'concluido' %}
+        <h2 class="mb-3 text-success">Concluir Chamado</h2>
+        <form method="POST" action="{% url 'chamado_concluir' chamado.pk %}" enctype="multipart/form-data" class="border p-3 rounded shadow-sm bg-light">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary w-100">Concluir Chamado</button>
+        </form>
+        {% else %}
+            <div class="alert alert-success mt-3" role="alert">
+                Chamado já concluído.
+            </div>
+        {% endif %}
     </div>
 
     <div class="d-flex justify-content-center mt-3">
-        <a href="{% url 'chamado_fila' %}" class="btn btn-sm btn-warning">Voltar</a>
+        <a href="{% url 'chamado_fila' %}" class="btn btn-warning">
+            Voltar
+        </a>
     </div>
-
+</div>
 {% endblock %}

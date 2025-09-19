@@ -31,13 +31,7 @@ Chamados
 
 O que falta ser feito:
 
--> Anexo de arquvios de requerente e responsável
-    -> Feito, falta aperfeiçoar a visualização nos templates
-
--> Todos os filtros (django_filter)
-    -> Filtro de admin->usuarios feito
-    -> Filtro de chamados em andamento, bug
 
 -> A função de deletar deve deletar os anexos do chamado no servidor (ele apaga do db, mas fica armazenado todas as imagens em media/chamados)
 
--> Melhorar os templates
+-> Melhorar os templates do admin

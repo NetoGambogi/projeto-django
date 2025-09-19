@@ -16,6 +16,11 @@ class AdminDashboardView(AdminRequiredMixin, ListView):
     template_name = "admin/dashboard.html"
     context_object_name = "chamados"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = ChamadoFilter(self.request.GET, queryset=self.get_queryset())
+        return context
+
 class UserListView(AdminRequiredMixin, ListView):
     model = CustomUser
     template_name = "admin/user_list.html"
@@ -85,8 +90,3 @@ class UserListView(FilterView):
     context_object_name = "usuarios"
     
     
-class ChamadoListView(FilterView):
-    model = Chamado
-    template_name = "admin/dashboard.html"
-    filterset_class = ChamadoFilter
-    context_object_name = "chamados"

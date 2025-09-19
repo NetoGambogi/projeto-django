@@ -16,33 +16,39 @@
         </ul>
     </div>
 
-                <h3>Imagens do Chamado</h3>
+<h3 class="mb-3 text-primary text-center">Imagens do Chamado</h3>
 
-            {% with imagens=chamado.anexos.all %}
-            {% if imagens %}
-                <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-                {% for anexo in imagens %}
-                    {% if ".jpg" in anexo.arquivo.url|lower or ".jpeg" in anexo.arquivo.url|lower or ".png" in anexo.arquivo.url|lower %}
-                    <div>
-                        <img src="{{ anexo.arquivo.url }}" 
-                        alt="imagem"
-                        style="width: 150px;">
-                    </div>
-                    
-                    {% endif %}
-                    
-                {% endfor %}
-                </div>
-            {% else %}
-                <p style="color:red;">Nenhuma imagem enviada para este chamado.</p>
-            {% endif %}
-            {% endwith %}
+{% with imagens=chamado.anexos.all %}
+{% if imagens %}
+<div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2 justify-content-center text-center">
+    {% for anexo in imagens %}
+        {% if ".jpg" in anexo.arquivo.url|lower or ".jpeg" in anexo.arquivo.url|lower or ".png" in anexo.arquivo.url|lower %}
+        <div class="col d-flex justify-content-center">
+            <div class="card shadow-sm border-0" style="width: 200px;">
+                <img src="{{ anexo.arquivo.url }}"
+                     class="card-img-top img-thumbnail"
+                     alt="imagem"
+                     style="height: 200px; object-fit: cover;">
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% else %}
+    <p class="text-danger fw-bold text-center">Nenhuma imagem enviada para este chamado.</p>
+{% endif %}
+{% endwith %}
+
+
+
 
     <div class="d-flex justify-content-center mt-3">
+        {% if chamado.status != 'concluido' and 'aberto' %}
         <form action="{% url 'admin_chamado_retornar' chamado.pk %}" method='POST'>
             {% csrf_token %}
             <button type="submit" class="btn btn-success btn-sm me-2">Voltar a fila</button>
         </form>
+        {% endif %}
         <a href="{% url 'admin_chamado_delete' chamado.pk %}" class="btn btn-sm btn-danger me-2">Excluir</a>
         <a href="{% url 'admin_chamado_edit' chamado.pk %}" class="btn btn-sm btn-primary me-2">Editar</a>
         <a href="{% url 'admin_dashboard' %}" class="btn btn-sm btn-secondary ">Voltar</a>

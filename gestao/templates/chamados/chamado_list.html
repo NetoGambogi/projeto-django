@@ -1,6 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Meus Chamados</h2>
+<h2>Painel do Requerente</h2>
+
+<div class="row text-center g-4 mb-4">  
+  <div class="col-md-3">  
+    <div class="card bg-light shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Total</h5>
+        <h3 class="fs-2">{{ total_abertos }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card bg-warning shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Aguardando</h5>
+        <h3 class="fs-2">{{ nao_atendidos }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card bg-info shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Em atendimento</h5>
+        <h3 class="fs-2">{{ em_atendimento }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card bg-success text-white shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Concluídos</h5>
+        <h3 class="fs-2">{{ concluidos }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
 <table class="table table-bordered">
   <tr>
     <th>Título</th>
@@ -22,6 +61,8 @@
   <tr><td colspan="3">Nenhum chamado encontrado.</td></tr>
   {% endfor %}
 </table>
+
+{% include "partials/pagination.html" %}
 
   <div class="d-flex justify-content-center">
       <a href="{% url 'chamado_create' %}" class="btn btn-success mb-3">Novo Chamado</a>

@@ -10,8 +10,27 @@ class ResponsavelDashboardView(ResponsavelRequiredMixin, ListView):
     model = Chamado
     template_name = "responsavel/dashboard.html"
 
-    def get_queryset(self):
-        return Chamado.objects.filter(responsavel=self.request.user)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+
+        chamados = Chamado.objects.filter(responsavel=user)
+        context["total"] = chamados.count()
+        context["abertos"] = Chamado.objects.filter(status="aberto", responsavel__isnull=True).count() 
+        context["em_andamento"] = chamados.filter(status="em_andamento").count()
+        context["concluidos"] = chamados.filter(status="concluido").count()
+
+        context["em_atendimento"] = (
+            chamados.filter(status__in=["aberto", "em_andamento"])
+            .order_by("-created_at")
+        )
+
+        context["historico"] = (
+            chamados.filter(status__in=["concluido", "cancelado"])
+            .order_by("-updated_at")[:5]
+        )
+
+        return context
     
 def AceitarChamadoView(request, pk):
     chamado = get_object_or_404(Chamado, pk=pk)

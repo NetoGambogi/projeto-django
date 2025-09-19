@@ -1,6 +1,81 @@
 {% extends "base.html" %}
 {% block content %}
+<h2>Painel do Responsável</h2>
 
-      <a href="{% url 'chamado_fila' %}" class="btn btn-sm btn-warning">Fila de chamados</a>
+<div class="row text-center g-4 mb-4">  
+  <div class="col-md-3">  
+    <div class="card bg-light shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Total atendidos</h5>
+        <h3 class="fs-2">{{ total }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card bg-warning shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Abertos</h5>
+        <h3 class="fs-2">{{ abertos }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card bg-info shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Em andamento</h5>
+        <h3 class="fs-2">{{ em_andamento }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card bg-success text-white shadow-sm" style="min-height: 130px;">
+      <div class="card-body p-4">
+        <h5 class="fs-5">Concluídos</h5>
+        <h3 class="fs-2">{{ concluidos }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row">
+
+<div class="col-md-6">
+    <h4>Chamados em atendimento <span class="badge bg-info">{{ em_atendimento|length }}</span></h4>
+    <ul class="list-group mt-2">
+      {% for chamado in em_atendimento %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span>{{ chamado.titulo }}</span>
+          <span class="badge bg-primary">{{ chamado.get_status_display }}</span>
+        </li>
+      {% empty %}
+        <li class="list-group-item">Nenhum chamado em atendimento.</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="col-md-6">
+    <h4>Histórico (últimos 5) <span class="badge bg-secondary">{{ historico|length }}</span></h4>
+    <ul class="list-group mt-2">
+      {% for chamado in historico %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span>{{ chamado.titulo }}</span>
+          <span class="badge bg-dark">{{ chamado.get_status_display }}</span>
+        </li>
+      {% empty %}
+        <li class="list-group-item">Nenhum chamado no histórico.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center mt-3">
+  <a href="{% url 'chamado_fila' %}" class="btn btn-warning">Fila de chamados</a>
+</div>
+
 
 {% endblock %}

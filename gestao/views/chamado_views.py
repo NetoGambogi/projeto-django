@@ -8,9 +8,24 @@ from ..forms import ChamadoForm, ChamadoAnexoForm
 class ChamadoListView(RequerenteRequiredMixin, ListView):
     model = Chamado
     template_name = "chamados/chamado_list.html"
+    context_object_name = "chamados"
+    paginate_by = 5 
 
     def get_queryset(self):
-        return Chamado.objects.filter(requerente=self.request.user)
+        return Chamado.objects.filter(requerente=self.request.user).order_by('-created_at')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user = self.request.user
+        chamados = Chamado.objects.filter(requerente=user)
+
+        context["total_abertos"] = chamados.count()  
+        context["nao_atendidos"] = chamados.filter(status="aberto", responsavel__isnull=True).count()
+        context["em_atendimento"] = chamados.filter(status__in=["aberto", "em_andamento"], responsavel__isnull=False).count()
+        context["concluidos"] = chamados.filter(status="concluido").count()
+
+        return context
     
 class ChamadoCreateView(RequerenteRequiredMixin, CreateView):
     model = Chamado
@@ -23,11 +38,9 @@ class ChamadoCreateView(RequerenteRequiredMixin, CreateView):
 
         response = super().form_valid(form)
 
-
         arquivos = form.cleaned_data.get("anexos") or []
-        print(">>> DEBUG anexos recebidos:", arquivos)
+
         for arquivo in arquivos:
-            print(">>> Salvando:", arquivo.name)
             ChamadoAnexo.objects.create(
                 chamado=self.object,  
                 arquivo=arquivo,
