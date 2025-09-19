@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.views.generic import ListView, UpdateView, DetailView
+from django.views.generic import ListView, UpdateView, DetailView, CreateView
 from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
@@ -7,7 +7,7 @@ from django_filters.views import FilterView
 from gestao.filters import ChamadoFilter, UserFilter
 from gestao.mixins import AdminRequiredMixin
 from ..models import CustomUser, Chamado
-from ..forms import AdminChamadoForm, UserForm
+from ..forms import AdminChamadoForm, CreateCustomUser, UserForm
 
 User = get_user_model()
 
@@ -56,6 +56,12 @@ class UserListView(AdminRequiredMixin, ListView):
         context["total_ativos"] = usuarios.filter(is_active=True).count()
         
         return context
+    
+class AdminUserCreate(AdminRequiredMixin, CreateView):
+    model = CustomUser
+    form_class = CreateCustomUser
+    template_name = "admin/user_create.html"
+    success_url = reverse_lazy("user_list")
     
 class AdminChamadoUpdate(AdminRequiredMixin, UpdateView):
     model = Chamado

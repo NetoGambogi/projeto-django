@@ -4,12 +4,16 @@ from django.forms import modelformset_factory
 from gestao.fields import MultipleFileField, MultipleFileInput
 from .models import CustomUser, Chamado, ChamadoAnexo
 
-    # usuarios
+        
+    # criar usuarios - admin 
 
-class CustomUserCreationForm(UserCreationForm):
-    class Meta:
+class CreateCustomUser(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ["username", "email", "role", "password1", "password2"]
+        fields = ("username", "email", "role")
+        labels = {
+            "role": "Função do usuário",
+        }
 
 class UserForm(UserChangeForm):
     password = None

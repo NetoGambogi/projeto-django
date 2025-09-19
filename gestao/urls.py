@@ -44,7 +44,8 @@ urlpatterns = [
     path("admin/chamados/<int:pk>/editar/", admin_views.AdminChamadoUpdate.as_view(), name="admin_chamado_edit"), # editar os chamados
     path("admin/chamados/<int:pk>/excluir/", admin_views.AdminChamadoDelete, name="admin_chamado_delete"), # deletar um chamado
     path("admin/chamados/<int:pk>/retornar/", admin_views.RetornarChamadoFila, name="admin_chamado_retornar"),
-    path("teste/usuarios/", admin_views.UserListView.as_view(), name="user_list"), # lista de usuários
+    path("admin/usuarios/", admin_views.UserListView.as_view(), name="user_list"), # lista de usuários
+    path("admin/usuarios/create", admin_views.AdminUserCreate.as_view(), name='user_create'),
     path("admin/usuarios/<int:pk>/editar/", admin_views.UserUpdateView.as_view(), name="user_edit"), # editar usuário
     path("admin/usuarios/<int:pk>/desativar/", admin_views.UserDesativarView, name="user_desativar"), # desativa um usuário
 

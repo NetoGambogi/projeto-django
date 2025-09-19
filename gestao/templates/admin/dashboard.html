@@ -7,7 +7,7 @@
   <div class="col-md-3">  
     <div class="card bg-light shadow-sm" style="min-height: 130px;">
       <div class="card-body p-4">
-        <h5 class="fs-5">Total</h5>
+        <h5 class="fs-5">Total chamados</h5>
         <h3 class="fs-2">{{ total }}</h3>
       </div>
     </div>
@@ -16,7 +16,7 @@
   <div class="col-md-3">
     <div class="card bg-warning shadow-sm" style="min-height: 130px;">
       <div class="card-body p-4">
-        <h5 class="fs-5">Aguardando atendimento</h5>
+        <h5 class="fs-5">Chamados na fila</h5>
         <h3 class="fs-2">{{ abertos }}</h3>
       </div>
     </div>
@@ -34,7 +34,7 @@
   <div class="col-md-3">
     <div class="card bg-success text-white shadow-sm" style="min-height: 130px;">
       <div class="card-body p-4">
-        <h5 class="fs-5">Concluídos</h5>
+        <h5 class="fs-5">Chamados concluídos</h5>
         <h3 class="fs-2">{{ concluidos }}</h3>
       </div>
     </div>
@@ -43,7 +43,9 @@
 
 <div class="d-flex justify-content-center">
 <form method="get">
+  <div style="display:flex; gap:10px;">
     {{ filter.form.as_p }}
+  </div>
   <div class="d-flex justify-content-center">
     <button type="submit" class="btn btn-success">Filtrar</button>
   </div>
