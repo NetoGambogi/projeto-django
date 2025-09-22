@@ -12,6 +12,7 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'admin_dashboard' %}">Dashboard Admin</a></li>
           {% endif %}
         {% endif %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'kanban' %}">Kanban</a></li>
       </ul>
       <ul class="navbar-nav">
         {% if user.is_authenticated %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-center mt-2">Tarefa detalhada: </h1>
+    <div class="d-flex justify-content-center">
+        <ul class="list-group">
+        <li class="list-group-item"><b>Id: </b> {{ tarefa.id }}</li>
+        <li class="list-group-item"><b>Criado por: </b> {{ tarefa.criado_por }}</li>
+        <li class="list-group-item"><b>Título: </b> {{ tarefa.titulo }}</li>
+        <li class="list-group-item"><b>Descrição: </b> {{ tarefa.descricao }}</li>
+        <li class="list-group-item"><b>Status: </b> {{ tarefa.get_status_display }}</li>
+        <li class="list-group-item"><b>Responsável: </b>  {{ tarefa.responsavel|default:"Ainda não há" }} </li>
+        <li class="list-group-item"><b>Criado em: </b> {{ tarefa.criado_em|date:"d/m/Y H:i" }}</li>
+        <li class="list-group-item"><b>Atualizado em: </b> {{ tarefa.atualizado_em|date:"d/m/Y H:i" }}</li>
+        </ul>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3">
+        <a href="{% url 'kanban' %}" class="btn btn-secondary">
+            Voltar
+        </a>
+    </div>
+
+{% endblock %}

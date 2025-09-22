@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import modelformset_factory
 from gestao.fields import MultipleFileField, MultipleFileInput
-from .models import CustomUser, Chamado, ChamadoAnexo
+from .models import CustomUser, Chamado, ChamadoAnexo, Tarefa
 
         
     # criar usuarios - admin 
@@ -71,3 +71,14 @@ class ChamadoAnexoForm(forms.ModelForm):
         widget=MultipleFileInput(attrs={"multiple": True}),
         required=False
     )
+    
+    
+class KanbanCreateForm(forms.ModelForm):
+    class Meta:
+        model = Tarefa
+        fields = ["titulo", "descricao"]
+
+class KanbanUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Tarefa
+        fields = ["titulo", "descricao", "responsavel"]

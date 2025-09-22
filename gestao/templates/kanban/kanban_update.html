@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h5 class="modal-title">Editar tarefa</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+</div>
+
+<div class="modal-body">
+  <form method="post" action="{% url 'kanban_update' tarefa.pk %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Salvar</button>
+  </form>
+</div>

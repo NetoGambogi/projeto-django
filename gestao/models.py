@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -92,3 +93,33 @@ class ChamadoAnexo(models.Model):
 
     def __str__(self):
         return f"Anexo {self.arquivo.name} (Chamado {self.chamado.id})"
+    
+class Tarefa(models.Model):
+    STATUS_CHOICES = [
+        ('todo', 'A fazer'),
+        ('doing', 'Em progresso'),
+        ('done', 'Concluído'),
+    ]
+    
+    titulo = models.CharField(max_length=100)
+    descricao = models.TextField(blank=True)
+
+    criado_por = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="Tarefas_criadas"
+    )
+    
+    responsavel = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True, blank=True,
+        related_name="tarefas_assumidas"
+    )
+    
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="todo")
+    criado_em = models.DateTimeField(auto_now_add=True)
+    atualizado_em = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"{self.titulo} - {self.get_status_display()}"
