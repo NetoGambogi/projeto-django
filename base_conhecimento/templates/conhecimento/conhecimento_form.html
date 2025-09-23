@@ -1,10 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm" style="max-width: 500px;">
+        <div class="card-header">
+            <h2 class="text-center">Criar novo conhecimento</h2>
+        </div>
+        <div class="d-flex justify-content-center card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.categoria.label_tag }}
+                    {{ form.categoria }}
+                    {{ form.categoria.errors }}
+                </div>
 
-<h2>Novo conhecimento</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Salvar</button>
-</form>
+                <div class="mb-3">
+                    {{ form.titulo.label_tag }}
+                    {{ form.titulo }}
+                    {{ form.titulo.errors }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.solucao.label_tag }}
+                    {{ form.solucao }}
+                    {{ form.solucao.errors }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.anexo.label_tag }}
+                    {{ form.anexo }}
+                    {{ form.anexo.errors }}
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a href="{% url 'conhecimentos' %}" class="btn btn-secondary me-2">Voltar</a>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h5 class="modal-title">Editar conhecimento</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+</div>
+
+
+<div class="modal-body">
+    <div class="d-flex justify-content-center">
+        <form method="post" action="{% url 'conhecimento_update' object.pk %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.titulo.label_tag }}
+                {{ form.titulo }}
+                {{ form.titulo.errors }}
+            </div>
+            <div class="mb-3">
+                {{ form.solucao.label_tag }}
+                {{ form.solucao }}
+                {{ form.solucao.errors }}
+            </div>
+            <div class="mb-3">
+                {{ form.anexo.label_tag }}
+                {{ form.anexo }}
+                {{ form.anexo.errors }}
+            </div>
+            <div class="mb-3">
+                {{ form.categoria.label_tag }}
+                {{ form.categoria }}
+                {{ form.categoria.errors }}
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>

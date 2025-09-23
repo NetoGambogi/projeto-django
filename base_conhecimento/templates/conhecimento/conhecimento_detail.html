@@ -4,6 +4,7 @@
 <h1 class="text-center mt-2">Conhecimento detalhado: </h1>
 <div class="d-flex justify-content-center">
     <ul class="list-group">
+        <li class="list-group-item"><b>Categoria: </b> {{ conhecimento.categoria }}</li>
         <li class="list-group-item"><b>Título: </b> {{ conhecimento.titulo }}</li>
         <li class="list-group-item"><b>Solução: </b> {{ conhecimento.solucao|default:"-" }}</li>
         <li class="list-group-item"><b>Responsável: </b> {{ conhecimento.responsavel.username|default:"-" }}

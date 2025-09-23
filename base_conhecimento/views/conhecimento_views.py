@@ -7,7 +7,7 @@ from base_conhecimento.models import BaseConhecimento
 class ConhecimentoView(ListView):
     model = BaseConhecimento
     template_name = "conhecimento/conhecimento_list.html"
-    name = "conhecimento"
+    context_object_name = "conhecimentos"
     
     
 class ConhecimentoDetailView(DetailView):
@@ -28,7 +28,7 @@ class ConhecimentoCreateView(CreateView):
 class ConhecimentoUpdateView(UpdateView):
     model = BaseConhecimento
     form_class = UpdateConhecimentoForm
-    template_name = "conhecimento/conhecimento_form.html"
+    template_name = "conhecimento/conhecimento_update.html"
     success_url = reverse_lazy('conhecimentos')
     
 def ConhecimentoDelete(request, pk):

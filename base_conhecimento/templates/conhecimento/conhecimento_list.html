@@ -17,11 +17,16 @@
         <th>Categoria</th>
         <th>Ações</th>
     </tr>
-    {% for conhecimento in object_list %}
+    {% for conhecimento in conhecimentos %}
     <tr>
         <td>{{ conhecimento.titulo }}</td>
         <td>{{ conhecimento.categoria|default:"Não definido" }}</td>
-        <td><a href="{% url 'conhecimento_detail' conhecimento.pk %}" class="btn btn-primary btn-sm">Detalhes</a></td>
+        <td><a href="{% url 'conhecimento_detail' conhecimento.pk %}" class="btn btn-primary btn-sm">Detalhes</a>
+            <button class="btn btn-secondary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#editModal"
+                data-url="{% url 'conhecimento_update' conhecimento.pk %}">
+                Editar
+            </button>
+        </td>
     </tr>
     {% empty %}
     <tr>
@@ -30,9 +35,17 @@
     {% endfor %}
 </table>
 
-<a href="{% url 'conhecimento_create' %}" class="btn btn-primary btn-sm">Criar novo conhecimento</a>
+<a href="{% url 'conhecimento_create' %}" class="btn btn-warning btn-sm">Criar novo conhecimento</a>
 
 <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- o form virá aqui via fetch -->
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <!-- o form virá aqui via fetch -->

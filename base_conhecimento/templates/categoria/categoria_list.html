@@ -5,10 +5,16 @@
 <div class="d-flex justify-content-center">
     <ul class="list-group">
         {% for categoria in object_list %}
-        <li class="list-group-item"><b>{{ categoria.id }} </b> {{ categoria.nome }}</li>
+        <li class="list-group-item bg-secondary-subtle"><b>{{ categoria.id }} </b> {{ categoria.nome }}</li>
         {% empty %}
         <p>Nenhuma categoria cadastrada.</p>
         {% endfor %}
     </ul>
+</div>
+
+<div class="d-flex justify-content-center">
+    <a href="{% url 'conhecimentos' %}" class="btn btn-secondary mt-3">
+        Voltar
+    </a>
 </div>
 {% endblock %}
