@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_filters',
     'gestao',
+    'base_conhecimento',
 ]
 
 MEDIA_URL = '/media/'

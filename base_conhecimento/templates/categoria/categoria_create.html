@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <h5 class="modal-title">Criar categoria</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+</div>
+
+
+<div class="modal-body">
+    <div class="d-flex justify-content-center">
+        <form method="post" action="{% url 'create_categoria' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.nome.label_tag }}
+                {{ form.nome }}
+                {{ form.nome.errors }}
+            </div>
+            <div class="d-flex justify-content-center">
+                <a href="{% url 'categorias' %}" class="btn btn-primary me-2">Categorias existentes</a>
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>

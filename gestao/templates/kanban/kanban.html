@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Quadro Kanban</h1>
+<div class="row">
+    <div class="d-flex align-items-center mb-3">
+        <h1 class="me-3 mb-0">Quadro Kanban</h1>
+        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#createModal"
+            data-url="{% url 'kanban_create' %}">
+            Criar nova tarefa
+        </button>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-4">
         <div class="card">
@@ -10,7 +19,7 @@
             {% for tarefa in todo %}
             <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-secondary-subtle">
-                    <a href="{% url 'kanban_detail' tarefa.pk %}" 
+                    <a href="{% url 'kanban_detail' tarefa.pk %}"
                         class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
                         {{ tarefa.titulo }}
                     </a>
@@ -19,12 +28,12 @@
                             {% csrf_token %}
                             <button type="submit" class="btn btn-success btn-sm me-2">Aceitar</button>
                         </form>
-                        <button class="btn btn-primary btn-sm me-2"
-                                data-bs-toggle="modal"
-                                data-bs-target="#editModal"
-                                data-url="{% url 'kanban_update' tarefa.pk %}">
-                        Editar
+                        {% if tarefa.criado_por == request.user %}
+                        <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#editModal"
+                            data-url="{% url 'kanban_update' tarefa.pk %}">
+                            Editar
                         </button>
+                        {% endif %}
                     </div>
                 </li>
             </ul>
@@ -44,26 +53,23 @@
             {% for tarefa in doing %}
             <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-primary-subtle">
-                    <a href="{% url 'kanban_detail' tarefa.pk %}" 
+                    <a href="{% url 'kanban_detail' tarefa.pk %}"
                         class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
-                        {{ tarefa.titulo }} - {{ tarefa.responsavel }}
+                        {{ tarefa.titulo }} - <strong>{{ tarefa.responsavel.username }}</strong>
                     </a>
+                    {% if tarefa.responsavel == request.user %}
                     <div class="d-flex mt-1">
                         <form action="{% url 'kanban_retornar' tarefa.pk %}" method='POST'>
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger btn-sm me-2">Retornar</button>
                         </form>
-                        <button class="btn btn-primary btn-sm me-2"
-                                data-bs-toggle="modal"
-                                data-bs-target="#editModal"
-                                data-url="{% url 'kanban_update' tarefa.pk %}">
-                        Editar
-                        </button>
                         <form action="{% url 'kanban_concluir' tarefa.pk %}" method='POST'>
                             {% csrf_token %}
                             <button type="submit" class="btn btn-success btn-sm">Concluir</button>
                         </form>
+
                     </div>
+                    {% endif %}
                 </li>
             </ul>
             {% empty %}
@@ -81,8 +87,8 @@
             </div>
             {% for tarefa in done %}
             <ul class="list-group list-group-flush">
-                <li class="list-group-item bg-success-subtle">                    
-                    <a href="{% url 'kanban_detail' tarefa.pk %}" 
+                <li class="list-group-item bg-success-subtle">
+                    <a href="{% url 'kanban_detail' tarefa.pk %}"
                         class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
                         {{ tarefa.titulo }}
                     </a>
@@ -95,36 +101,25 @@
             {% endfor %}
         </div>
     </div>
-
-
-
-
 </div>
-    <div class="d-flex justify-content-center mt-4">
-        <button class="btn btn-primary btn-sm me-2"
-        data-bs-toggle="modal"
-        data-bs-target="#createModal"
-        data-url="{% url 'kanban_create' %}">
-            Criar nova tarefa
-        </button>
-    </div>
 
 
-    <!-- Modal vazio -->
+
+<!-- Modal vazio -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <!-- o form virá aqui via fetch -->
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- o form virá aqui via fetch -->
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <!-- o form virá aqui via fetch -->
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- o form virá aqui via fetch -->
+        </div>
     </div>
-  </div>
 </div>
 
 {% endblock %}

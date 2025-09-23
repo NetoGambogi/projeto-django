@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="d-flex align-items-center mb-3">
+        <h1 class="me-3 mb-0">Base de conhecimento</h1>
+        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#createModal"
+            data-url="{% url 'create_categoria' %}">
+            Criar nova categoria
+        </button>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Título</th>
+        <th>Categoria</th>
+        <th>Ações</th>
+    </tr>
+    {% for conhecimento in object_list %}
+    <tr>
+        <td>{{ conhecimento.titulo }}</td>
+        <td>{{ conhecimento.categoria|default:"Não definido" }}</td>
+        <td><a href="{% url 'conhecimento_detail' conhecimento.pk %}" class="btn btn-primary btn-sm">Detalhes</a></td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">Nenhum conhecimento encontrado.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="{% url 'conhecimento_create' %}" class="btn btn-primary btn-sm">Criar novo conhecimento</a>
+
+<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- o form virá aqui via fetch -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}

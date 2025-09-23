@@ -4,26 +4,29 @@
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav me-auto">
         {% if user.is_authenticated %}
-          {% if user.role == "requerente" %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'chamado_list' %}">Meus Chamados</a></li>
-          {% elif user.role == "responsavel" %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'responsavel_dashboard' %}">Painel</a></li>
-          {% elif user.role == "admin" %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'admin_dashboard' %}">Dashboard Admin</a></li>
-          {% endif %}
+        {% if user.role == "requerente" %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'chamado_list' %}">Meus Chamados</a></li>
+        {% elif user.role == "responsavel" %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'responsavel_dashboard' %}">Painel</a></li>
+        {% elif user.role == "admin" %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'admin_dashboard' %}">Dashboard Admin</a></li>
         {% endif %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'kanban' %}">Kanban</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'kanban' %}">Kanban</a></li>
+        {% if user.role == "responsavel" and "admin" %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'conhecimentos' %}">Suporte</a></li>
+        {% endif %}
+        {% endif %}
       </ul>
       <ul class="navbar-nav">
         {% if user.is_authenticated %}
-          <li class="nav-item">
-            <form method="post" action="{% url 'logout' %}">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-sm btn-outline-light">Sair</button>
-            </form>
-          </li>
+        <li class="nav-item">
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-outline-light">Sair</button>
+          </form>
+        </li>
         {% else %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Entrar</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Entrar</a></li>
         {% endif %}
       </ul>
     </div>

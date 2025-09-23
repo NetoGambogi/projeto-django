@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from gestao.forms import KanbanCreateForm, KanbanUpdateForm
 from ..models import Tarefa
-
+from django.core.exceptions import PermissionDenied
 
 class KanbanView(ListView):
     model = Tarefa
@@ -47,17 +47,21 @@ def AceitarTarefa(request, pk):
 
 def RetornarTarefa(request, pk):
     tarefa = get_object_or_404(Tarefa, pk=pk)
-    if tarefa.status == "doing":
-        tarefa.status = "todo"
-        tarefa.responsavel = None
-        tarefa.save()
+    if tarefa.responsavel != request.user:
+        raise PermissionDenied("Você não pode concluir uma tarefa que não é sua.")
+    
+    tarefa.status = "todo"
+    tarefa.responsavel = None
+    tarefa.save()
     return redirect("kanban")
 
 def ConcluirTarefa(request, pk):
     tarefa = get_object_or_404(Tarefa, pk=pk)
     
-    if tarefa.status == "doing":
-        tarefa.status = "done"
-        tarefa.responsavel = request.user
-        tarefa.save()
+    if tarefa.responsavel != request.user:
+        raise PermissionDenied("Você não pode concluir uma tarefa que não é sua.")
+    
+    tarefa.status = "done"
+    tarefa.responsavel = request.user
+    tarefa.save()
     return redirect("kanban")

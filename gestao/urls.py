@@ -14,7 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.urls import include, path
 from django.views.generic import RedirectView, TemplateView
 from gestao.views import kanban_views
 from .views import auth_views, chamado_views, admin_views, responsavel_views
@@ -59,7 +59,7 @@ urlpatterns = [
     path("responsavel/chamados/<int:pk>/concluir/", responsavel_views.ConcluirChamadoView.as_view(), name="chamado_concluir"), # conclusão do chamado
     path("responsavel/chamados/<int:pk>/anexo/", responsavel_views.ResponsavelAnexoCreateView.as_view(), name="responsavel_anexo"), # anexos da conclusão do chamado
 
-    # 
+    #  Kanban 
     path("kanban/", kanban_views.KanbanView.as_view(), name="kanban"),
     path("kanban/<int:pk>/detail", kanban_views.KanbanDetailView.as_view(), name="kanban_detail"),
     path("kanban/<int:pk>/update", kanban_views.KanbanUpdateView.as_view(), name="kanban_update"),
@@ -67,6 +67,10 @@ urlpatterns = [
     path("kanban/<int:pk>/aceitar/", kanban_views.AceitarTarefa, name="kanban_aceitar"),
     path("kanban/<int:pk>/retornar/", kanban_views.RetornarTarefa, name="kanban_retornar"),
     path("kanban/<int:pk>/concluir/", kanban_views.ConcluirTarefa, name="kanban_concluir"),
+    
+    # Base de conhecimento (suporte)
+    path('base/', include('base_conhecimento.urls')),
+
     
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

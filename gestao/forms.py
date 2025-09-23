@@ -81,4 +81,4 @@ class KanbanCreateForm(forms.ModelForm):
 class KanbanUpdateForm(forms.ModelForm):
     class Meta:
         model = Tarefa
-        fields = ["titulo", "descricao", "responsavel"]
+        fields = ["titulo", "descricao"]

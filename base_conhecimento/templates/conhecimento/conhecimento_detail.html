@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-center mt-2">Conhecimento detalhado: </h1>
+<div class="d-flex justify-content-center">
+    <ul class="list-group">
+        <li class="list-group-item"><b>Título: </b> {{ conhecimento.titulo }}</li>
+        <li class="list-group-item"><b>Solução: </b> {{ conhecimento.solucao|default:"-" }}</li>
+        <li class="list-group-item"><b>Responsável: </b> {{ conhecimento.responsavel.username|default:"-" }}
+        </li>
+        <li class="list-group-item"><b>Criado em: </b> {{ conhecimento.criado_em|date:"d/m/Y H:i" }}</li>
+    </ul>
+</div>
+
+<div class="d-flex justify-content-center">
+    <a href="{% url 'conhecimentos' %}" class="btn btn-secondary mt-3">
+        Voltar
+    </a>
+</div>
+
+
+{% endblock %}

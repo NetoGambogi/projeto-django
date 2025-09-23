@@ -2,23 +2,32 @@
 {% block content %}
 
 <h1 class="text-center mt-2">Tarefa detalhada: </h1>
-    <div class="d-flex justify-content-center">
-        <ul class="list-group">
+<div class="d-flex justify-content-center">
+    <ul class="list-group">
         <li class="list-group-item"><b>Id: </b> {{ tarefa.id }}</li>
-        <li class="list-group-item"><b>Criado por: </b> {{ tarefa.criado_por }}</li>
+        <li class="list-group-item"><b>Criado por: </b> {{ tarefa.criado_por.username }}</li>
         <li class="list-group-item"><b>Título: </b> {{ tarefa.titulo }}</li>
-        <li class="list-group-item"><b>Descrição: </b> {{ tarefa.descricao }}</li>
-        <li class="list-group-item"><b>Status: </b> {{ tarefa.get_status_display }}</li>
-        <li class="list-group-item"><b>Responsável: </b>  {{ tarefa.responsavel|default:"Ainda não há" }} </li>
+        <li class="list-group-item" style="width: 400px; word-wrap: break-word;"><b>Descrição:
+            </b> {{ tarefa.descricao }}</li>
+        <li class="list-group-item"><b>Responsável: </b> {{ tarefa.responsavel.username|default:"Ainda não há" }} </li>
         <li class="list-group-item"><b>Criado em: </b> {{ tarefa.criado_em|date:"d/m/Y H:i" }}</li>
         <li class="list-group-item"><b>Atualizado em: </b> {{ tarefa.atualizado_em|date:"d/m/Y H:i" }}</li>
-        </ul>
-    </div>
+        {% if tarefa.status == "todo" %}
+        <li class="list-group-item bg-secondary-subtle"><b>Status: </b> {{ tarefa.get_status_display }}</li>
+        {% elif tarefa.status == "doing" %}
+        <li class="list-group-item bg-primary-subtle"><b>Status: </b> {{ tarefa.get_status_display }}</li>
+        {% else %}
+        <li class="list-group-item bg-success-subtle"><b>Status: </b> {{ tarefa.get_status_display }}</li>
+        {% endif %}
 
-    <div class="d-flex justify-content-center mt-3">
-        <a href="{% url 'kanban' %}" class="btn btn-secondary">
-            Voltar
-        </a>
-    </div>
+
+    </ul>
+</div>
+
+<div class="d-flex justify-content-center mt-3">
+    <a href="{% url 'kanban' %}" class="btn btn-secondary">
+        Voltar
+    </a>
+</div>
 
 {% endblock %}
